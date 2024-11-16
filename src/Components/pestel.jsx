@@ -1,3 +1,6 @@
+import stopLoad from './stopLoad.jsx';
+import { jsPDF } from 'jspdf';
+
 // Constantes pour la mise en page
 const TITLE_Y_POSITION = 15;
 const PAGE_WIDTH = 210;
@@ -16,7 +19,6 @@ const columnColors = [
 ];
 
 function makePDF() {
-  const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
   // Titre
@@ -116,3 +118,5 @@ function hexToRgb(hex) {
   const b = bigint & 255;
   return [r, g, b];
 }
+
+export default makePDF;

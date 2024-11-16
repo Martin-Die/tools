@@ -1,3 +1,5 @@
+import makePDF from './pestel.jsx'
+
 async function sendToGPT() {
     const form = document.getElementById('pestelForm');
     const pestelCategories = [];
@@ -16,11 +18,15 @@ async function sendToGPT() {
             currentCategory = { name: child.textContent.trim(), questionsAndAnswers: [] };
         } else if (child.tagName === 'TEXTAREA') {
             const questionText = child.getAttribute("data-question");
-            const answer = child.value.trim() || '';
-            currentCategory.questionsAndAnswers.push({ question: questionText, answer: answer });
+            const answer = child.value.trim(); // Assurez-vous que la réponse est bien récupérée
+            if (questionText && answer) { // Vérifiez que la question et la réponse ne sont pas vides
+                currentCategory.questionsAndAnswers.push({ question: questionText, answer: answer });
+            }
         }
     });
     if (currentCategory) pestelCategories.push(currentCategory);
+
+    console.log("Catégories et réponses collectées : ", pestelCategories);
 
     let prompt = "Voici une analyse PESTEL complète. Veuillez analyser chaque catégorie et fournir une analyse détaillée suivie d'une synthèse de 60 mots au format JSON pour chacune:\n\n";
     pestelCategories.forEach(category => {
@@ -31,6 +37,8 @@ async function sendToGPT() {
         prompt += "\n";
     });
     prompt += "Répondez au format JSON comme suit: { \"categories\": [ { \"nom\": \"Politique\", \"analyse\": \"...\", \"synthese\": \"...\" }, ... ] }";
+
+    console.log("Prompt envoyé à l'API : ", prompt);
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {

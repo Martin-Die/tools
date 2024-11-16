@@ -24,7 +24,7 @@ const PestelForm = () => {
         if (form && submitButton) {
             const handleSubmit = (event) => {
                 event.preventDefault();
-                validateForm();
+                validateForm(); // Valide le formulaire et envoie les données à sendToGPT
             };
 
             submitButton.addEventListener('click', handleSubmit);
@@ -54,8 +54,8 @@ const PestelForm = () => {
                                 <textarea
                                     id={`${category.name.toLowerCase()}Q${qIndex + 1}`}
                                     placeholder="Votre réponse"
-                                    value="boulangerie"
-                                    data-question={question}
+                                    value="Boulangerie"
+                                    data-question={question} // Assurez-vous que la question est bien associée
                                 />
                             </div>
                         ))}
