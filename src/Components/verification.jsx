@@ -19,7 +19,7 @@ function validateForm() {
 
     if (isValid) {
         startLoad();
-        sendToGPT(); // Envoi des données à GPT
+        sendToGPT();
     } else if (firstInvalidField) {
         firstInvalidField.focus();
     }
