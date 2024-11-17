@@ -1,4 +1,4 @@
-import makePDF from './pestel.jsx'
+import makePDF from './synthese.jsx'
 
 async function sendToGPT() {
     const form = document.getElementById('pestelForm');
