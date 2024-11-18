@@ -1,53 +1,58 @@
+import { categories } from '../../../pestel';
 import React, { useState } from 'react';
-// import validateForm from '../../Components/verification.jsx';
 import './pestel.css';
 
-import categories from '../../../pestel';
+const initialState = new Map(categories.map(
+    (e) => {
+        e.name = e.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+        return e;
+    }
+).map(
+    (e) => [e.name, new Array(e.questions.length)]
+));
 
 const PestelForm = () => {
-    const str_categories = categories["categories"].map((category) =>
-        category.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase()
-    )
-    const [formValues, setFormValues] = useState(new Map(
-        str_categories.map((e) => [e, ''])
-    ));
-    // console.log(formValues);
-    function handleChange(e) {
+    const [formValues, setFormValues] = useState(initialState);
+
+    function handleChange(e, idX) {
         const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value })
+        const newVal = new Map([...formValues.entries()]);
+        const arr = newVal.get(name);
+        arr[idX] = value
+        newVal.set(name, arr);
+        setFormValues(newVal);
+        console.log(newVal)
     }
 
     function handleSubmit(e) {
         e.preventDefault();
         console.log(formValues);
     }
-  
+
     return (
         <div className="container">
             <h2>Réaliser mon PESTEL</h2>
             <h6>Identifier l'environnement dans lequel mon projet va évoluer</h6>
             <form id="pestelForm" onSubmit={handleSubmit}>
-                {str_categories.map((category, catIndex) => (
-                    <div key={catIndex}>
-                        <h3>{category}</h3>
-                        <input name={category} type='text' onChange={handleChange} placeholder='arbre'></input>
-                        {/* {category.questions.map((question, qIndex) => (
-                            <div key={qIndex}>
-                                <label htmlFor={`${category.name.toLowerCase()}Q${qIndex + 1}`}>
-                                    {`${catIndex * 2 + qIndex + 1}. ${question}`}
-                                </label>
-                                <textarea
-                                    id={`${category.name.toLowerCase()}Q${qIndex + 1}`}
-                                    onChange={handleChange}
-                                    placeholder="Votre réponse"
-                                    value="Boulangerie"
-                                    data-question={question}
-                                />
-                            </div>
-                        ))} */}
+                {categories.map(({ name, questions }, catIndex) => (
+                    <div key={`cat_${catIndex}`}>
+                        <h3>{name}</h3>
+                        {questions.map((q, qIndex) => {
+                            const id = `cat_${catIndex}_q_${qIndex}`;
+                            return (
+                                <span key={id}>
+                                    <label htmlFor={id}>{q}</label>
+                                    <textarea
+                                        id={id}
+                                        name={name}
+                                        onChange={(e) => handleChange(e, qIndex)}
+                                    ></textarea>
+                                </span>
+                            );
+                        })}
                     </div>
                 ))}
-                <button type="submit" id="pestelButton">Envoyer les réponses</button>
+                <button type="submit">Envoyer les réponses</button>
             </form>
         </div>
     );
