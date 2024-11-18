@@ -4,6 +4,7 @@ import './pestel.css';
 
 const initialState = new Map(categories.map(
     (e) => {
+        e.original_name = e.name.repeat(1);
         e.name = e.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
         return e;
     }
@@ -11,7 +12,7 @@ const initialState = new Map(categories.map(
     (e) => [e.name, new Array(e.questions.length)]
 ));
 
-const PestelForm = () => {
+const PestelForm = ({callback}) => {
     const [formValues, setFormValues] = useState(initialState);
 
     function handleChange(e, idX) {
@@ -21,12 +22,11 @@ const PestelForm = () => {
         arr[idX] = value
         newVal.set(name, arr);
         setFormValues(newVal);
-        console.log(newVal)
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(formValues);
+        callback(formValues);
     }
 
     return (
