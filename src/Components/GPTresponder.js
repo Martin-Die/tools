@@ -2,7 +2,12 @@ import { categories } from '../../pestel';
 import makePDF from './synthese.jsx'
 import startLoad from './startLoad.jsx'
 
-const API_KEY = import.meta.env.VITE_API_KEY;
+const API_KEY = import.meta.env.VITE_API_KEY || process.env.API_KEY;
+
+if (!API_KEY) {
+    console.error('API Key is missing! Ensure it is set in the environment variables.');
+    throw new Error('Missing API Key');
+}
 
 export async function sendToGPT(data) {
     const answer = categories.map(
