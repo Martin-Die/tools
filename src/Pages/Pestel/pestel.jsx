@@ -1,67 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import validateForm from '../../Components/verification.jsx';
-import startLoad from '../../Components/startLoad.jsx';
-import stopLoad from '../../Components/stopLoad.jsx';
-import sendToGPT from '../../Components/GPTresponder.jsx';
+import { categories } from '../../../pestel';
+import React, { useState } from 'react';
 import './pestel.css';
 
-const PestelForm = () => {
-    const [categories, setCategories] = useState([]);
+const initialState = new Map(categories.map(
+    (e) => {
+        e.original_name = e.name.repeat(1);
+        e.name = e.name.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+        return e;
+    }
+).map(
+    (e) => [e.name, new Array(e.questions.length)]
+));
 
-    useEffect(() => {
-        const loadQuestions = async () => {
-            const response = await fetch('./pestel.json');
-            const data = await response.json();
-            setCategories(data.categories);
-        };
-        loadQuestions();
-    }, []);
+const PestelForm = ({callback}) => {
+    const [formValues, setFormValues] = useState(initialState);
 
-    useEffect(() => {
-        const form = document.getElementById('pestelForm');
-        const submitButton = document.getElementById('pestelButton');
+    function handleChange(e, idX) {
+        const { name, value } = e.target;
+        const newVal = new Map([...formValues.entries()]);
+        const arr = newVal.get(name);
+        arr[idX] = value
+        newVal.set(name, arr);
+        setFormValues(newVal);
+    }
 
-        if (form && submitButton) {
-            const handleSubmit = (event) => {
-                event.preventDefault();
-                validateForm(); // Valide le formulaire et envoie les données à sendToGPT
-            };
-
-            submitButton.addEventListener('click', handleSubmit);
-
-            // Nettoyage de l'écouteur d'événements
-            return () => {
-                submitButton.removeEventListener('click', handleSubmit);
-            };
-        } else {
-            console.error('Formulaire ou bouton non trouvé.');
-        }
-    }, [categories]);
+    function handleSubmit(e) {
+        e.preventDefault();
+        callback(formValues);
+    }
 
     return (
         <div className="container">
             <h2>Réaliser mon PESTEL</h2>
             <h6>Identifier l'environnement dans lequel mon projet va évoluer</h6>
-            <form id="pestelForm">
-                {categories.map((category, catIndex) => (
-                    <div key={catIndex}>
-                        <h3>{category.name}</h3>
-                        {category.questions.map((question, qIndex) => (
-                            <div key={qIndex}>
-                                <label htmlFor={`${category.name.toLowerCase()}Q${qIndex + 1}`}>
-                                    {`${catIndex * 2 + qIndex + 1}. ${question}`}
-                                </label>
-                                <textarea
-                                    id={`${category.name.toLowerCase()}Q${qIndex + 1}`}
-                                    placeholder="Votre réponse"
-                                    value="Boulangerie"
-                                    data-question={question} // Assurez-vous que la question est bien associée
-                                />
-                            </div>
-                        ))}
+            <form id="pestelForm" onSubmit={handleSubmit}>
+                {categories.map(({ name, questions }, catIndex) => (
+                    <div key={`cat_${catIndex}`}>
+                        <h3>{name}</h3>
+                        {questions.map((q, qIndex) => {
+                            const id = `cat_${catIndex}_q_${qIndex}`;
+                            return (
+                                <span key={id}>
+                                    <label htmlFor={id}>{q}</label>
+                                    <textarea
+                                        id={id}
+                                        name={name}
+                                        onChange={(e) => handleChange(e, qIndex)}
+                                        required
+                                    ></textarea>
+                                </span>
+                            );
+                        })}
                     </div>
                 ))}
-                <button type="submit" id="pestelButton">Envoyer les réponses</button>
+                <button type="submit">Envoyer les réponses</button>
             </form>
         </div>
     );
