@@ -2,7 +2,7 @@ import { categories } from '../../pestel';
 import makePDF from './synthese.jsx'
 import startLoad from './startLoad.jsx'
 
-const API_KEY = import.meta.env.VITE_API_KEY || process.env.VITE_API_KEY;
+const VITE_API_KEY = import.meta.env.VITE_API_KEY || process.env.VITE_API_KEY;
 
 if (!API_KEY) {
     console.error('API Key is missing! Ensure it is set in the environment variables.');
@@ -33,7 +33,7 @@ export async function sendToGPT(data) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_KEY}`
+                'Authorization': `Bearer ${VITE_API_KEY}`
             },
             body: JSON.stringify({
                 model: 'gpt-3.5-turbo',
