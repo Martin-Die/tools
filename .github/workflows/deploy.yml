@@ -27,7 +27,7 @@ jobs:
         env:
           VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
         run: |
-          echo "Deploying with API Key: $VITE_API_KEY"
+          echo `Deploying with API Key: ${VITE_API_KEY}`
           npm run build
 
       - name: Upload production-ready build files

@@ -4,7 +4,7 @@ import startLoad from './startLoad.jsx'
 
 const VITE_API_KEY = import.meta.env.VITE_API_KEY || process.env.VITE_API_KEY;
 
-if (!API_KEY) {
+if (!VITE_API_KEY) {
     console.error('API Key is missing! Ensure it is set in the environment variables.');
 }
 
