@@ -1,6 +1,6 @@
 import { sendToGPT } from './Components/GPTresponder';
-import Spinner from './Components/spinner/Spinner';
 import PestelForm from './Pages/Pestel/pestel';
+import { RingLoader } from 'react-spinners';
 import { useState } from 'react';
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
     return (
         <div>
             <PestelForm callback={sendToAnalyze} />
-            {loading && <Spinner />}
+            {loading && <RingLoader size={999} />}
         </div>
     );
 };

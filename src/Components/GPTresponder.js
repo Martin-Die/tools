@@ -18,7 +18,7 @@ export async function sendToGPT(data) {
         + "Répondez au format JSON comme suit: { \"categories\": [ { \"nom\": \"Politique\", \"analyse\": \"...\", \"synthese\": \"...\" }, ... ] }";
 
     console.log("Prompt envoyé à l'API : ", prompt);
-    return new Promise(resolve => setTimeout(resolve, 3000));
+    return new Promise(resolve => setTimeout(resolve, 9000));
 
 
     try {
