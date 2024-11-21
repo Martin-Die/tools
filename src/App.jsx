@@ -1,4 +1,5 @@
 import { sendToGPT } from './Components/GPTresponder';
+import Spinner from './Components/spinner/Spinner';
 import PestelForm from './Pages/Pestel/pestel';
 import { useState } from 'react';
 
@@ -9,13 +10,13 @@ const App = () => {
     function sendToAnalyze(data) {
         setLoading(true);
         sendToGPT(data)
-        .then(() => setLoading(false));
+            .then(() => setLoading(false));
     }
 
     return (
         <div>
             <PestelForm callback={sendToAnalyze} />
-            {loading && <h1>Je prépare à manger</h1>}
+            {loading && <Spinner />}
         </div>
     );
 };

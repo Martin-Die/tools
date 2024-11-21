@@ -1,4 +1,3 @@
-import stopLoad from './stopLoad.jsx';
 import { jsPDF } from 'jspdf';
 
 // Constantes pour la mise en page
@@ -39,7 +38,6 @@ function makePDF() {
 
   // Sauvegarder le PDF
   doc.save("synthese-pestel.pdf");
-  stopLoad();
 }
 
 function drawPESTELDiagram(doc, syntheses) {

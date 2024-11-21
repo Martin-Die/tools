@@ -1,6 +1,5 @@
 import { categories } from '../../pestel';
 import makePDF from './synthese.jsx'
-import startLoad from './startLoad.jsx'
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -19,9 +18,7 @@ export async function sendToGPT(data) {
         + "Répondez au format JSON comme suit: { \"categories\": [ { \"nom\": \"Politique\", \"analyse\": \"...\", \"synthese\": \"...\" }, ... ] }";
 
     console.log("Prompt envoyé à l'API : ", prompt);
-    startLoad();
-    // return;
-    // return new Promise(resolve => setTimeout(resolve, 3000));
+    return new Promise(resolve => setTimeout(resolve, 3000));
 
 
     try {
