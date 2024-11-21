@@ -17,21 +17,12 @@ const columnColors = [
   "#f8cc8c", "#ffec7c", "#d0dc74"
 ];
 
-function makePDF() {
+async function makePDF(syntheses) {
   const doc = new jsPDF();
 
   // Titre
   doc.setFontSize(16);
   doc.text("Analyse PESTEL", PAGE_WIDTH / 2, TITLE_Y_POSITION, null, null, "center");
-
-  // Récupérer les synthèses depuis localStorage
-  const synthesesData = localStorage.getItem('syntheses');
-  let syntheses = [];
-  if (synthesesData) {
-    syntheses = JSON.parse(synthesesData);
-  } else {
-    console.log('Aucune synthèse disponible.');
-  }
 
   // Dessiner le schéma PESTEL
   drawPESTELDiagram(doc, syntheses);
