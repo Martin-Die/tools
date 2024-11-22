@@ -13,10 +13,27 @@ const App = () => {
             .then(() => setLoading(false));
     }
 
+    const loaderContainerStyle = {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        zIndex: 1000
+    };
+
     return (
         <div>
             <PestelForm callback={sendToAnalyze} />
-            {loading && <RingLoader size={999} />}
+            {loading && (
+                <div style={loaderContainerStyle}>
+                    <RingLoader size={150} />
+                </div>
+            )}
         </div>
     );
 };

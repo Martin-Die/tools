@@ -47,7 +47,7 @@ const PestelForm = ({callback}) => {
                                         name={name}
                                         onChange={(e) => handleChange(e, qIndex)}
                                         // value="boulangerie"
-                                        required
+                                        // required
                                     ></textarea>
                                 </span>
                             );

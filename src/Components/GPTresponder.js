@@ -18,7 +18,7 @@ export function sendToGPT(data) {
         + "Répondez au format JSON comme suit: { \"categories\": [ { \"nom\": \"Politique\", \"analyse\": \"...\", \"synthese\": \"...\" }, ... ] }";
 
     // console.log("Prompt envoyé à l'API : ", prompt);
-    // return new Promise(resolve => setTimeout(resolve, 9000));
+    return new Promise(resolve => setTimeout(resolve, 9000));
 
     return fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
