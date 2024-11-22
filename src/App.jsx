@@ -13,7 +13,7 @@ const App = () => {
             .then(() => setLoading(false));
     }
 
-    const loaderContainerStyle = {
+    const loaderStyle = {
         position: 'fixed',
         top: 0,
         left: 0,
@@ -30,7 +30,7 @@ const App = () => {
         <div>
             <PestelForm callback={sendToAnalyze} />
             {loading && (
-                <div style={loaderContainerStyle}>
+                <div style={loaderStyle}>
                     <RingLoader size={150} />
                 </div>
             )}
