@@ -1,6 +1,8 @@
-import { categories } from '../../../pestel';
+import { categories } from './Components/pestel';
 import React, { useState } from 'react';
 import './pestel.css';
+import { sendToGPT } from './Components/GPTresponder';
+import Spinner from '../../Components/Spinner';
 
 const initialState = new Map(categories.map(
     (e) => {
@@ -12,8 +14,15 @@ const initialState = new Map(categories.map(
     (e) => [e.name, new Array(e.questions.length)]
 ));
 
-const PestelForm = ({callback}) => {
+const PestelForm = ({ callback }) => {
     const [formValues, setFormValues] = useState(initialState);
+    const [loading, setLoading] = useState(false);
+
+    function sendToAnalyze(data) {
+        setLoading(true);
+        sendToGPT(data)
+            .then(() => setLoading(false));
+    }
 
     function handleChange(e, idX) {
         const { name, value } = e.target;
@@ -26,7 +35,7 @@ const PestelForm = ({callback}) => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        callback(formValues);
+        sendToAnalyze(formValues);
     }
 
     return (
@@ -46,16 +55,17 @@ const PestelForm = ({callback}) => {
                                         id={id}
                                         name={name}
                                         onChange={(e) => handleChange(e, qIndex)}
-                                        // value="boulangerie"
-                                        // required
+                                    // value="boulangerie"
+                                    // required
                                     ></textarea>
                                 </span>
                             );
                         })}
                     </div>
                 ))}
-                <button type="submit">Envoyer les réponses</button>
+                <button type="submit" disabled={loading}>Envoyer les réponses</button>
             </form>
+            <Spinner loading={loading} />
         </div>
     );
 };

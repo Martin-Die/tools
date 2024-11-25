@@ -1,4 +1,4 @@
-import { categories } from '../../pestel';
+import { categories } from './pestel';
 import makePDF from './synthese.jsx'
 
 const API_KEY = import.meta.env.VITE_API_KEY;
