@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import PestelForm from './Pages/Pestel/pestel';
+import PorterForm from './Pages/Porter/porter';
+import Facture from './Pages/TVA/Facture';
 import Navbar from './Components/navbar';
 
 const Home = () => {
@@ -19,6 +21,8 @@ const Root = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/Pestel" element={<PestelForm />} />
+                <Route path="/Porter" element={<PorterForm />} />
+                <Route path="/Facture" element={<Facture />} />
             </Routes>
         </div>
     );

@@ -1,0 +1,39 @@
+{
+    "categories": [
+        {
+            "name": "Concurrence intra-sectorielle",
+            "questions": [
+                "Quel est le niveau de concurrence dans votre secteur ?",
+                "Quels sont les principaux concurrents et leurs parts de marché ?"
+            ]
+        },
+        {
+            "name": "Menace des nouveaux entrants",
+            "questions": [
+                "Quelles sont les barrières à l'entrée dans votre secteur ?",
+                "Quelle est la probabilité de nouveaux entrants dans les prochaines années ?"
+            ]
+        },
+        {
+            "name": "Pouvoir de négociation des fournisseurs",
+            "questions": [
+                "Combien de fournisseurs clés avez-vous ?",
+                "Quel est leur pouvoir de négociation sur les prix et les conditions ?"
+            ]
+        },
+        {
+            "name": "Pouvoir de négociation des clients",
+            "questions": [
+                "Quelle est la concentration de vos clients ?",
+                "Quel est leur pouvoir de négociation sur les prix et les services ?"
+            ]
+        },
+        {
+            "name": "Menace des produits de substitution",
+            "questions": [
+                "Quels sont les principaux produits ou services de substitution ?",
+                "Quelle est leur attractivité en termes de prix et de performance ?"
+            ]
+        }
+    ]
+}

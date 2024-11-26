@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Calculez le montant TTC de votre facture</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./facture.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+    <h1>Calculez le montant TTC de votre facture</h1>
+
+    <form id="vatForm">
+        <div id="purchases">
+            <div class="purchase">
+                <input type="text" maxlength="30" class="purchaseName" placeholder="Nom de l'achat">
+                <input type="number" class="purchaseAmount" step="0.01" min="0" max="99999" placeholder="Montant HT"
+                    oninput="this.value = Math.min(this.value, this.max);">
+            </div>
+        </div>
+        <button type="button" id="addPurchase">Ajouter un achat</button>
+        <div>
+            <label for="region">Région:</label>
+            <select id="region" name="region">
+                <option value="France Métropolitaine">France Métropolitaine</option>
+                <option value="DROM">DROM</option>
+                <option value="Corse">Corse</option>
+            </select>
+        </div>
+        <div>
+            <label for="tauxTVA">Taux de TVA applicable:</label>
+            <select id="tauxTVA" name="tauxTVA"></select>
+        </div>
+        <div id="customRateDiv" style="display: none;">
+            <label for="customRate">Taux personnalisé (%):</label>
+            <input type="number" id="customRate" name="customRate" step="0.1" min="0" max="100"
+                placeholder="Choisissez votre pourcentage" oninput="this.value = Math.min(this.value, this.max);">
+        </div>
+        <div>
+            <button type="submit" id="calculateButton">Calculer</button>
+        </div>
+    </form>
+
+    <div id="results">
+        <p>Montant de la TVA: <span id="montantTVA"></span></p>
+        <p>Montant de la facture (TTC): <span id="montantTTC"></span></p>
+    </div>
+
+    <div id="invoiceSection">
+        <button type="button" id="createInvoiceButton">Créer cette facture</button>
+    </div>
+
+    <div id="invoiceDetails" style="display: none;">
+        <h2>Détails de la facture</h2>
+        <h3>Informations sur l'entreprise</h3>
+        <form id="invoiceForm">
+            <div>
+                <label for="companyName">Nom de la société:</label>
+                <input type="text" maxlength="50" id="companyName" name="companyName" placeholder="Votre entreprise">
+            </div>
+            <div>
+                <label for="adress">Adresse:</label>
+                <input type="text" maxlength="50" id="adress" name="adress" placeholder="Adresse de l'entreprise">
+            </div>
+            <div>
+                <label for="postalCode">Code postal:</label>
+                <input type="text" maxlength="6" id="postalCode" name="postalCode" placeholder="Code postal de l'entreprise">
+            </div>
+            <div>
+                <label for="mail">Mail:</label>
+                <input type="email" required pattern=".+@.+\..+" maxlength="50" id="mail" name="mail" placeholder="example@mail.com">
+            </div>
+            <div>
+                <label for="phoneNumber">Téléphone:</label>
+                <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength="14" id="phoneNumber" name="phoneNumber" placeholder="01 23 45 67 89">
+            </div>
+            <div>
+                <label for="invoiceNumber">Numéro de facture:</label>
+                <input type="text" maxlength="15" id="invoiceNumber" name="invoiceNumber" placeholder="Numéro de facture">
+            </div>
+            <div>
+                <label for="logo">Télécharger un logo (facultatif):</label>
+                <input type="file" id="logo" accept="image/*">
+            </div>
+
+            <h3>Informations sur votre client</h3>
+            <div>
+                <label for="clientName">Nom du client:</label>
+                <input type="text" maxlength="50" id="clientName" name="clientName" placeholder="Nom du client">
+            </div>
+            <div>
+                <label for="clientAdress">Adresse du client:</label>
+                <input type="text" maxlength="50" id="clientAdress" name="clientAdress" placeholder="Adresse du client">
+            </div>
+            <div>
+                <label for="clientPostalCode">Code postal du client:</label>
+                <input type="text" maxlength="6" id="clientPostalCode" name="clientPostalCode" placeholder="Code postal du client">
+            </div>
+            <div>
+                <label for="invoiceDate">Date:</label>
+                <input type="date" id="invoiceDate" name="invoiceDate">
+            </div>
+        </form>
+    </div>
+
+    <div id="paymentDetails" style="display: none;">
+        <h2>Modalités et conditions de règlement</h2>
+        <form id="paymentForm">
+            <div>
+                <label for="paymentDate">Date de paiement limite:</label>
+                <input type="date" id="paymentDate" name="paymentDate">
+            </div>
+            <div>
+                <label for="paymentMethod">Mode de paiement:</label>
+                <input type="text" maxlength="50" id="paymentMethod" name="paymentMethod" placeholder="Mode de paiement">
+            </div>
+            <div>
+                <label for="discountTerms">Conditions d'escompte:</label>
+                <input type="number" id="discountTerms" name="discountTerms" placeholder="Conditions d'escompte" step="0.1" min="0" max="100" oninput="this.value = Math.min(this.value, this.max);">
+            </div>
+            <div>
+                <label for="lateFees">Taux des pénalités de retard:</label>
+                <input type="number" id="lateFees" name="lateFees" placeholder="Taux des pénalités" step="0.1" min="0" max="100" oninput="this.value = Math.min(this.value, this.max);">
+            </div>
+        </form>
+    </div>
+
+    <div id="specialcase" style="display: none;">
+        <h2>Cas supplémentaires</h2>
+        <form id="cases">
+            <div id="checkbox">
+                <div id="item">
+                    <input type="checkbox" id="location" name="location" value="Location gérance ou franchisé">
+                    <label for="location">Location gérance ou franchisé</label>
+                </div>
+                <div id="item">
+                    <input type="checkbox" id="liquidation" name="liquidation" value="Société en liquidation">
+                    <label for="liquidation">Société en liquidation</label>
+                </div>
+                <div id="item">
+                    <input type="checkbox" id="member" name="member" value="Membre d'un centre de gestion agrée">
+                    <label for="member">Membre d'un centre de gestion agrée</label>
+                </div>
+                <div id="item">
+                    <input type="checkbox" id="autofacturation" name="autofacturation" value="autofacturation">
+                    <label for="autofacturation">Autofacturation</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="credits" style="display: none;">
+        <h2>Informations complémentaires</h2>
+        <form id="paymentForm">
+            <div>
+                <label for="website">Site:</label>
+                <input type="url" maxlength="50" id="website" name="website" placeholder="http://www.example.com/index.html">
+            </div>
+            <div>
+                <label for="siret">Siret:</label>
+                <input type="text" maxlength="17" id="siret" name="siret" placeholder="362 521 879 00034">
+            </div>
+            <div>
+                <label for="tvaNumber">Numéro TVA:</label>
+                <input type="text" maxlength="15" id="tvaNumber" name="tvaNumber" placeholder="FR 32 123456789">
+            </div>
+            <div>
+                <label for="iban">IBAN:</label>
+                <input type="text" maxlength="33" id="iban" name="iban" placeholder="FR14 2004 1010 0505 0001 3M02 606">
+            </div>
+            <div>
+                <button type="button" id="generateInvoiceButton">Générer la facture</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="./facture.js"></script>
+</body>
+
+</html>

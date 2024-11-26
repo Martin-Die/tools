@@ -1,4 +1,4 @@
-import { categories } from './pestel';
+import { categories } from './porter';
 import makePDF from './synthese.jsx'
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -13,9 +13,9 @@ export function sendToGPT(data) {
         (e) => e.original_name + '\n\n\t' + e.questions.map((libele, index) => libele + '\n\t' + data.get(e.name)[index] + '\n').join('\n\t') + '\n'
     ).flat(2).join('\n\n');
 
-    const prompt = "Voici une analyse PESTEL complète. Veuillez analyser chaque catégorie et fournir une analyse détaillée suivie d'une synthèse de 60 mots au format JSON pour chacune:\n\n"
+    const prompt = "Voici une analyse des 5 forces de Porter. Veuillez analyser chaque forces et fournir une analyse détaillée suivie d'une synthèse de 60 mots au format JSON pour chacune:\n\n"
         + answer
-        + "Répondez au format JSON comme suit: { \"categories\": [ { \"nom\": \"Politique\", \"analyse\": \"...\", \"synthese\": \"...\" }, ... ] }";
+        + "Répondez au format JSON comme suit: { \"categories\": [ { \"nom\": \"Concurrence intra-sectorielle\", \"analyse\": \"...\", \"synthese\": \"...\" }, ... ] }";
 
     console.log("Prompt envoyé à l'API : ", prompt);
     return new Promise(resolve => setTimeout(resolve, 9000));
