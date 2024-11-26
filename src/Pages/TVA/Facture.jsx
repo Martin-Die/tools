@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PurchaseList from './Components/PurchaseList';
+import PurchaseList from './Components/purchaseList';
 import RegionSelector from './Components/RegionSelector';
 import InvoiceDetails from './Components/InvoiceDetails';
 import Results from './Components/Results';
