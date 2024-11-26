@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PurchaseList from './Components/purchaseList';
-import RegionSelector from './Components/RegionSelector';
-import InvoiceDetails from './Components/InvoiceDetails';
-import Results from './Components/Results';
+import RegionSelector from './Components/regionSelector';
+import InvoiceDetails from './Components/invoiceDetails';
+import Results from './Components/results';
 import './facture.css';
 
 const Facture = () => {
