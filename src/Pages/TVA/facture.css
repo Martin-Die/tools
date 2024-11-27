@@ -23,7 +23,7 @@ form div,
     margin-bottom: 15px;
 }
 
-#addPurchase{
+#addPurchase {
     margin-bottom: 10px;
 }
 
@@ -32,6 +32,27 @@ form div,
     flex-direction: column;
     gap: 20px;
     margin: 0;
+}
+
+#checkbox div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Espacement entre la case à cocher et le texte */
+}
+
+#checkbox input[type="checkbox"] {
+    margin: 0;
+    /* Supprime tout espacement par défaut */
+    flex-shrink: 0;
+    /* Évite que la case soit compressée */
+}
+
+#checkbox label {
+    margin: 0;
+    /* Supprime le décalage vertical par défaut */
+    flex-grow: 1;
+    /* Permet au texte de prendre tout l'espace disponible */
 }
 
 #item {
@@ -55,8 +76,10 @@ input[type="url"] {
 }
 
 button {
-    width: 100%;
+    width: 25%;
+    display: block;
     padding: 10px;
+    margin: 0 auto 2% auto;
     background-color: #007BFF;
     color: white;
     border: none;

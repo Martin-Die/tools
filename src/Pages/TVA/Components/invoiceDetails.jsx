@@ -45,12 +45,14 @@ const InvoiceDetails = ({ show, onClose, onSubmit }) => {
   };
 
   const handleSubmit = () => {
+    console.log(formData)
     onSubmit(formData); // Transmet les données au parent (Facture) pour générer le PDF
-    onClose(); // Ferme le formulaire
+    // onClose(); // Ferme le formulaire
   };
 
   return (
     <div id="invoiceDetails" style={{ display: show ? 'block' : 'none' }}>
+      <button type="button" onClick={onClose}>Fermer</button>
       <h2>Détails de la facture</h2>
 
       <h3>Informations sur l'entreprise</h3>
@@ -242,13 +244,15 @@ const InvoiceDetails = ({ show, onClose, onSubmit }) => {
       </form>
 
       <h3>Cas supplémentaires</h3>
-      <form id="cases">
+      <form id="checkbox">
         <div>
           <input
             type="checkbox"
             id="location"
             name="location"
             value="Location gérance ou franchisé"
+            checked={formData.location}
+            onChange={handleInputChange}
           />
           <label htmlFor="location">Location gérance ou franchisé</label>
         </div>
@@ -258,6 +262,8 @@ const InvoiceDetails = ({ show, onClose, onSubmit }) => {
             id="liquidation"
             name="liquidation"
             value="Société en liquidation"
+            checked={formData.liquidation}
+            onChange={handleInputChange}
           />
           <label htmlFor="liquidation">Société en liquidation</label>
         </div>
@@ -267,6 +273,8 @@ const InvoiceDetails = ({ show, onClose, onSubmit }) => {
             id="member"
             name="member"
             value="Membre d'un centre de gestion agrée"
+            checked={formData.member}
+            onChange={handleInputChange}
           />
           <label htmlFor="member">Membre d'un centre de gestion agrée</label>
         </div>
@@ -276,6 +284,8 @@ const InvoiceDetails = ({ show, onClose, onSubmit }) => {
             id="autofacturation"
             name="autofacturation"
             value="Autofacturation"
+            checked={formData.autofacturation}
+            onChange={handleInputChange}
           />
           <label htmlFor="autofacturation">Autofacturation</label>
         </div>
@@ -334,7 +344,6 @@ const InvoiceDetails = ({ show, onClose, onSubmit }) => {
       </form>
 
       <button type="button" onClick={handleSubmit}>Générer la facture</button>
-      <button type="button" onClick={onClose}>Fermer</button>
     </div>
   );
 };

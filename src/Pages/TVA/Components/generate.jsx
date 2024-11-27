@@ -80,6 +80,22 @@ function generateInvoice(invoiceData) {
         tableWidth: 'wrap',
     });
 
+    // Cas supplémentaires
+    const additionalCases = [];
+    if (invoiceData.location) additionalCases.push("Location gérance ou franchisé");
+    if (invoiceData.liquidation) additionalCases.push("Société en liquidation");
+    if (invoiceData.member) additionalCases.push("Membre d'un centre de gestion agrée");
+    if (invoiceData.autofacturation) additionalCases.push("Autofacturation");
+
+    if (additionalCases.length > 0) {
+        const casesYStart = doc.lastAutoTable.finalY + 20; // Position après les informations de paiement
+        doc.text("Cas supplémentaires :", 14, casesYStart);
+
+        additionalCases.forEach((caseText, index) => {
+            doc.text("- " + caseText, 20, casesYStart + 10 + (index * 6));
+        });
+    }
+
     // Pied de page
     const { website, siret, tvaNumber, iban } = invoiceData;
     const pageWidth = doc.internal.pageSize.width;

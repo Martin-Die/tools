@@ -100,12 +100,14 @@ const Facture = () => {
       </form>
       {/* Composant pour afficher les résultats */}
       <Results results={results} />
-      <button
-        type="button"
-        onClick={() => setShowInvoiceDetails(true)}
-      >
-        Créer cette facture
-      </button>
+      {!showInvoiceDetails && (
+        <button
+          type="button"
+          onClick={() => setShowInvoiceDetails(true)}
+        >
+          Créer cette facture
+        </button>
+      )}
       {/* Composant pour afficher les détails de la facture */}
       {showInvoiceDetails && (
         <InvoiceDetails
