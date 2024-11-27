@@ -3,6 +3,7 @@ import PurchaseList from './Components/purchaseList';
 import RegionSelector from './Components/regionSelector';
 import InvoiceDetails from './Components/invoiceDetails';
 import Results from './Components/results';
+import generateInvoice from './Components/generate';
 import './facture.css';
 
 const Facture = () => {
@@ -14,28 +15,12 @@ const Facture = () => {
   const [results, setResults] = useState({ montantTVA: '', montantTTC: '' });
   const [showInvoiceDetails, setShowInvoiceDetails] = useState(false);
 
-  const handlePurchaseChange = (index, field, value) => {
-    if (field === 'add') {
-      setPurchases([...purchases, { name: '', amount: '' }]);
-    } else {
-      const newPurchases = [...purchases];
-      newPurchases[index][field] = value;
-      setPurchases(newPurchases);
-    }
-  };
-
-  const handleRemovePurchase = (index) => {
-    const newPurchases = purchases.filter((_, i) => i !== index);
-    setPurchases(newPurchases);
-  };
-
-  useEffect(() => {
-    calculateVAT();
-  }, [purchases, tva, customRate]);
-
-  const calculateVAT = () => {
-    let totalHT = purchases.reduce((sum, purchase) => sum + parseFloat(purchase.amount || 0), 0);
-    let tauxTVA = tva === 'custom' ? parseFloat(customRate) : parseFloat(tva);
+  const calculateVAT = (currentPurchases, currentTva, currentCustomRate) => {
+    const totalHT = currentPurchases.reduce(
+      (sum, purchase) => sum + parseFloat(purchase.amount || 0),
+      0
+    );
+    const tauxTVA = currentTva === 'custom' ? parseFloat(currentCustomRate) : parseFloat(currentTva);
     if (isNaN(totalHT) || isNaN(tauxTVA)) {
       setResults({ montantTVA: '', montantTTC: '' });
       return;
@@ -45,45 +30,89 @@ const Facture = () => {
     setResults({ montantTVA: montantTVA.toFixed(2), montantTTC: montantTTC.toFixed(2) });
   };
 
-  const handleCreateInvoice = () => {
-    // Logique pour générer le PDF ici
-    // Vous pouvez utiliser jsPDF pour créer le PDF
-    console.log("Générer la facture PDF...");
+
+  useEffect(() => {
+    if (tva) {
+      calculateVAT(purchases, tva, customRate);
+    }
+  }, [purchases, tva, customRate]);
+
+  const handlePurchaseChange = (index, field, value) => {
+    if (field === 'add') {
+      setPurchases((prevPurchases) => [
+        ...prevPurchases,
+        { name: '', amount: '' },
+      ]);
+    } else {
+      const updatedPurchases = [...purchases];
+      updatedPurchases[index][field] = value;
+      setPurchases(updatedPurchases);
+    }
+  };
+
+  const handleRemovePurchase = (index) => {
+    const updatedPurchases = purchases.filter((_, i) => i !== index);
+    setPurchases(updatedPurchases);
+  };
+
+  const handleFormSubmit = (invoiceData) => {
+    const purchaseDetails = purchases.map((purchase) => ({
+      name: purchase.name,
+      amount: parseFloat(purchase.amount) || 0,
+    }));
+    const totalHT = purchases.reduce(
+      (sum, purchase) => sum + parseFloat(purchase.amount || 0),
+      0
+    );
+
+    const finalInvoiceData = {
+      ...invoiceData,
+      purchaseDetails,
+      totalHT,
+      montantTVA: parseFloat(results.montantTVA) || 0,
+      montantTTC: parseFloat(results.montantTTC) || 0,
+    };
+
+    generateInvoice(finalInvoiceData);
   };
 
   return (
     <div>
       <h1>Calculez le montant TTC de votre facture</h1>
       <form id="vatForm">
-        <PurchaseList 
-          purchases={purchases} 
-          onPurchaseChange={handlePurchaseChange} 
-          onRemovePurchase={handleRemovePurchase} 
+        {/* Composant pour la liste des achats */}
+        <PurchaseList
+          purchases={purchases}
+          onPurchaseChange={handlePurchaseChange}
+          onRemovePurchase={handleRemovePurchase}
         />
-        <RegionSelector 
-          region={region} 
-          setRegion={setRegion} 
-          tva={tva} 
-          setTva={setTva} 
-          showCustomRate={showCustomRate} 
-          setShowCustomRate={setShowCustomRate} 
-          customRate={customRate} 
-          setCustomRate={setCustomRate} 
+        {/* Composant pour sélectionner la région et le taux de TVA */}
+        <RegionSelector
+          region={region}
+          setRegion={setRegion}
+          tva={tva}
+          setTva={setTva}
+          showCustomRate={showCustomRate}
+          setShowCustomRate={setShowCustomRate}
+          customRate={customRate}
+          setCustomRate={setCustomRate}
         />
       </form>
+      {/* Composant pour afficher les résultats */}
       <Results results={results} />
-      <button type="button" id="createInvoiceButton" onClick={() => setShowInvoiceDetails(true)}>
+      <button
+        type="button"
+        onClick={() => setShowInvoiceDetails(true)}
+      >
         Créer cette facture
       </button>
-
-      {/* Affichage des détails de la facture */}
-      <InvoiceDetails show={showInvoiceDetails} onClose={() => setShowInvoiceDetails(false)} />
-      
-      {/* Bouton pour générer le PDF */}
+      {/* Composant pour afficher les détails de la facture */}
       {showInvoiceDetails && (
-        <button type="button" id="generateInvoiceButton" onClick={handleCreateInvoice}>
-          Générer le PDF
-        </button>
+        <InvoiceDetails
+          show={showInvoiceDetails}
+          onClose={() => setShowInvoiceDetails(false)}
+          onSubmit={handleFormSubmit}
+        />
       )}
     </div>
   );
