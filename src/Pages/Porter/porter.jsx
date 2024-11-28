@@ -55,7 +55,6 @@ const PorterForm = ({ callback }) => {
                                         id={id}
                                         name={name}
                                         onChange={(e) => handleChange(e, qIndex)}
-                                        // value="boulangerie"
                                         // required
                                     ></textarea>
                                 </span>

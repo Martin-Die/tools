@@ -1,6 +1,6 @@
-import { categories } from './Components/pestel';
+import { categories } from './Components/swot';
 import React, { useState } from 'react';
-import './pestel.css';
+import './swot.css';
 import { sendToGPT } from './Components/GPTresponder';
 import Spinner from '../../Components/Spinner';
 
@@ -14,7 +14,7 @@ const initialState = new Map(categories.map(
     (e) => [e.name, new Array(e.questions.length)]
 ));
 
-const PestelForm = ({ callback }) => {
+const SwotForm = ({ callback }) => {
     const [formValues, setFormValues] = useState(initialState);
     const [loading, setLoading] = useState(false);
 
@@ -40,9 +40,9 @@ const PestelForm = ({ callback }) => {
 
     return (
         <div className="container">
-            <h2>Réaliser mon PESTEL</h2>
+            <h2>Réaliser mon SWOT</h2>
             <h6>Identifier l'environnement dans lequel mon projet va évoluer</h6>
-            <form id="pestelForm" onSubmit={handleSubmit}>
+            <form id="swotForm" onSubmit={handleSubmit}>
                 {categories.map(({ name, questions }, catIndex) => (
                     <div key={`cat_${catIndex}`}>
                         <h3>{name}</h3>
@@ -69,4 +69,4 @@ const PestelForm = ({ callback }) => {
     );
 };
 
-export default PestelForm;
+export default SwotForm;
