@@ -1,8 +1,6 @@
 import { categories } from './pestel';
 import makePDF from './synthese.jsx'
 
-const API_KEY = import.meta.env.VITE_API_KEY;
-
 export function sendToGPT(data) {
     const answer = categories.map(
         (e) => {
@@ -21,28 +19,28 @@ export function sendToGPT(data) {
     makePDF(prompt);
     return new Promise(resolve => setTimeout(resolve, 9000));
 
-    return fetch('https://api.openai.com/v1/chat/completions', {
+    return fetch('/api/openai', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${API_KEY}`
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [{ role: 'user', content: prompt }]
+        body: JSON.stringify({ prompt })
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
         })
-    })
-    .then((data) => data.json())
-    .then((data) => {
-        // console.log(data);
-        const results = JSON.parse(data.choices[0].message.content);
-        const syntheses = results.categories.map(category => ({
-            category: category.nom,
-            synthesis: category.synthese
-        }));
+        .then((data) => {
+            const results = JSON.parse(data.choices[0].message.content);
+            const syntheses = results.categories.map(category => ({
+                category: category.nom,
+                synthesis: category.synthese
+            }));
 
-        makePDF(syntheses);
-        // console.log(syntheses);
-    })
-    .catch(console.log);
+            makePDF(syntheses);
+            // console.log(syntheses);
+        })
+        .catch(console.log);
 }
