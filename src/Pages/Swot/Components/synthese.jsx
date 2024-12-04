@@ -52,56 +52,53 @@ function drawQuadrantWithText(doc, x, y, title, text, titleColor, contentColor) 
   doc.setDrawColor(0, 0, 0);
   doc.roundedRect(x, y, QUADRANT_WIDTH, QUADRANT_HEIGHT, RADIUS, RADIUS, 'F');
 
-  // Dessiner le rectangle du titre avec coins arrondis seulement en haut
+  // Dessiner le rectangle du titre en deux parties
   doc.setFillColor(titleR, titleG, titleB);
-  
-  // Rectangle du titre avec coins arrondis en haut
-  doc.roundedRect(x, y, QUADRANT_WIDTH, TITLE_HEIGHT + RADIUS/2 , RADIUS , RADIUS , 'F', [true,true,false,false]);
-  
-   // Rectangle pour masquer les coins inférieurs arrondis
-   doc.setFillColor(contentR, contentG, contentB); // Couleur de fond
-   doc.rect(x,RADIUS+y ,QUADRANT_WIDTH,TITLE_HEIGHT-RADIUS/2,'F');
+  // Partie supérieure arrondie
+  doc.roundedRect(x, y, QUADRANT_WIDTH, TITLE_HEIGHT, RADIUS, RADIUS, 'F', [true, true, false, false]);
+  // Partie inférieure rectangulaire
+  doc.rect(x + 0.1, y + RADIUS, QUADRANT_WIDTH - 0.1, TITLE_HEIGHT - RADIUS, 'F');
 
-   // Titre du quadrant
-doc.setFontSize(12);
-doc.setFont("Helvetica", "bold");
-doc.setTextColor(textColors.title ?? '#000000');
-doc.text(title,x + QUADRANT_WIDTH /2 ,y + TITLE_HEIGHT /2 ,{align:"center",baseline:"middle"});
+  // Titre du quadrant
+  doc.setFontSize(12);
+  doc.setFont("Helvetica", "bold");
+  doc.setTextColor(textColors.title ?? '#000000');
+  doc.text(title, x + QUADRANT_WIDTH / 2, y + TITLE_HEIGHT / 2, { align: "center", baseline: "middle" });
 
-// Texte du quadrant
-doc.setFont("Helvetica","normal");
-doc.setFontSize(8);
-doc.setTextColor(textColors.content ?? '#333333');
-drawMultilineText(doc,text,x + QUADRANT_WIDTH /2 ,y + TITLE_HEIGHT +5 ,QUADRANT_WIDTH -4 );
+  // Texte du quadrant
+  doc.setFont("Helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(textColors.content ?? '#333333');
+  drawMultilineText(doc, text, x + QUADRANT_WIDTH / 2, y + TITLE_HEIGHT + 5, QUADRANT_WIDTH - 4);
 }
 
-function drawMultilineText(doc,text,x,y,maxWidth) {
-   const lines = splitTextIntoLines(doc,text,maxWidth);
-   const lineHeight = doc.internal.getLineHeight() * interligne;
+function drawMultilineText(doc, text, x, y, maxWidth) {
+  const lines = splitTextIntoLines(doc, text, maxWidth);
+  const lineHeight = doc.internal.getLineHeight() * interligne;
 
-   lines.forEach((line,index) => {
-       doc.text(line,x,y + index * lineHeight,{align:"center"});
-   });
+  lines.forEach((line, index) => {
+    doc.text(line, x, y + index * lineHeight, { align: "center" });
+  });
 }
 
-function splitTextIntoLines(doc,text,maxWidth) {
-   const words = text.split(' ');
-   const lines = [];
-   let currentLine = words[0];
+function splitTextIntoLines(doc, text, maxWidth) {
+  const words = text.split(' ');
+  const lines = [];
+  let currentLine = words[0];
 
-   for (let i=1; i < words.length; i++) {
-       const word = words[i];
-       const width = doc.getStringUnitWidth(currentLine + " " + word) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    const width = doc.getStringUnitWidth(currentLine + " " + word) * doc.internal.getFontSize() / doc.internal.scaleFactor;
 
-       if (width < maxWidth) {
-           currentLine += " " + word;
-       } else {
-           lines.push(currentLine);
-           currentLine = word;
-       }
-   }
-   lines.push(currentLine);
-   return lines;
+    if (width < maxWidth) {
+      currentLine += " " + word;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
 }
 
 export default makePDF;
