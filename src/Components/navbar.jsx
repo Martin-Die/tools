@@ -13,9 +13,9 @@ const Navbar = () => {
                 <li>
                     <Link to="/Porter">Porter</Link>
                 </li>
-                {/* <li>
+                <li>
                     <Link to="/Facture">Facture</Link>
-                </li> */}
+                </li>
                 <li>
                     <Link to="/SWOT">SWOT</Link>
                 </li>
