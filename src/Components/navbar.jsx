@@ -8,16 +8,7 @@ const Navbar = () => {
                     <Link to="/" style={{cursor: 'not-allowed', pointerEvents: 'none'}}>Home</Link>
                 </li>
                 <li>
-                    <Link to="/PESTEL">PESTEL</Link>
-                </li>
-                <li>
-                    <Link to="/Porter">Porter</Link>
-                </li>
-                <li>
                     <Link to="/Facture">Facture</Link>
-                </li>
-                <li>
-                    <Link to="/SWOT">SWOT</Link>
                 </li>
             </ul>
         </nav>
