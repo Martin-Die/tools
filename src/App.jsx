@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Navbar from './Components/navbar';
 import Facture from './Pages/TVA/facture';
 import Mentions from "./Pages/mentionsLegales/mentions";
+import PageNotFound from "./Components/404/pageNotFound";
 import './App.css';
 
 const Home = () => {
@@ -21,6 +22,9 @@ const Root = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/Facture" element={<Facture />} />
                 <Route path="/Mentions_Legales" element={<Mentions />} />
+
+                {/* Route pour les pages non trouvées */}
+                <Route path="*" element={<PageNotFound />} />
             </Routes>
             {location.pathname === "/" && <Navbar />}
         </div>

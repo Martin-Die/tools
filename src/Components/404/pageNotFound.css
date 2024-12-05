@@ -1,0 +1,80 @@
+/* src/PageNotFound.css */
+
+.page-not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f9;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+.page-not-found h1 {
+    font-size: 5rem;
+    color: #ff6347;
+    margin: 0;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.page-not-found p {
+    font-size: 1.5rem;
+    color: #555;
+    margin: 10px 0;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.page-not-found a {
+    font-size: 1.25rem;
+    color: #ff6347;
+    text-decoration: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 2px solid #ff6347;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.page-not-found a:hover {
+    background-color: #ff6347;
+    color: white;
+}
+
+.page-not-found img {
+    animation: fadeIn 2s ease-in-out;
+    /* animation: bounce 2s infinite; */
+    /* animation: fadeIn 2s ease-in-out, bounce 2s ease-in-out 2s infinite; */
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
