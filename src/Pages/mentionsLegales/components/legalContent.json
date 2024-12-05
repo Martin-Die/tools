@@ -1,0 +1,54 @@
+{
+    "sections": [
+        {
+            "id": "presentation",
+            "title": "Présentation du site",
+            "condition": "formData.companyName",
+            "content": "En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site {formData.companyName} l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi."
+        },
+        {
+            "id": "director",
+            "title": "Directeur de publication",
+            "condition": "formData.director",
+            "content": "Le directeur de publication est : {formData.director}"
+        },
+        {
+            "id": "legalInfo",
+            "title": "Informations légales",
+            "condition": "formData.companyName || formData.address || formData.siren",
+            "content": [
+                "Raison sociale : {formData.companyName}",
+                "Adresse : {formData.address}",
+                "SIREN : {formData.siren}"
+            ]
+        },
+        {
+            "id": "contact",
+            "title": "Contact",
+            "condition": "formData.email || formData.phone",
+            "content": [
+                "Email : {formData.email}",
+                "Téléphone : {formData.phone}"
+            ]
+        },
+        {
+            "id": "hosting",
+            "title": "Hébergement",
+            "condition": "formData.host || formData.hostAddress",
+            "content": [
+                "Le site est hébergé par : {formData.host}",
+                "Adresse : {formData.hostAddress}"
+            ]
+        },
+        {
+            "id": "intellectualProperty",
+            "title": "Propriété intellectuelle",
+            "content": "L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés."
+        },
+        {
+            "id": "personalData",
+            "title": "Données personnelles",
+            "content": "Conformément à la loi « Informatique et Libertés » du 6 janvier 1978 modifiée et au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données."
+        }
+    ]
+}
