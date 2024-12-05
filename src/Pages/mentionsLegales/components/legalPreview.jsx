@@ -11,7 +11,7 @@ const LegalPreview = ({ formData }) => {
         await navigator.clipboard.writeText(text);
         alert("Texte copié");
       } catch (err) {
-        setCopyMessage("Erreur lors de la copie");
+        alert("Erreur lors de la copie");
       }
     }
   };
