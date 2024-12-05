@@ -1,54 +1,71 @@
 {
     "sections": [
-        {
-            "id": "presentation",
-            "title": "Présentation du site",
-            "condition": "formData.companyName",
-            "content": "En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site {companyName} l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi."
-        },
-        {
-            "id": "director",
-            "title": "Directeur de publication",
-            "condition": "formData.director",
-            "content": "Le directeur de publication est : {director}"
-        },
-        {
-            "id": "legalInfo",
-            "title": "Informations légales",
-            "condition": "formData.companyName || formData.address || formData.siren",
-            "content": [
-                "Raison sociale : {companyName}",
-                "Adresse : {address}",
-                "SIREN : {siren}"
-            ]
-        },
-        {
-            "id": "contact",
-            "title": "Contact",
-            "condition": "formData.email || formData.phone",
-            "content": [
-                "Email : {email}",
-                "Téléphone : {phone}"
-            ]
-        },
-        {
-            "id": "hosting",
-            "title": "Hébergement",
-            "condition": "formData.host || formData.hostAddress",
-            "content": [
-                "Le site est hébergé par : {host}",
-                "Adresse : {hostAddress}"
-            ]
-        },
-        {
-            "id": "intellectualProperty",
-            "title": "Propriété intellectuelle",
-            "content": "L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés."
-        },
-        {
-            "id": "personalData",
-            "title": "Données personnelles",
-            "content": "Conformément à la loi « Informatique et Libertés » du 6 janvier 1978 modifiée et au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données."
-        }
+      {
+        "id": "presentation",
+        "title": "Présentation du site",
+        "condition": "formData.companyName",
+        "content": "Le site {companyName} est édité par {companyName}, situé à {address}. Le site a pour objectif de fournir des informations sur les activités de {companyName}."
+      },
+      {
+        "id": "director",
+        "title": "Responsable de publication",
+        "condition": "formData.director",
+        "content": "Le responsable de publication est : {director}, en qualité de gérant/directeur de {companyName}."
+      },
+      {
+        "id": "legalInfo",
+        "title": "Informations légales",
+        "condition": "formData.companyName || formData.address || formData.siren",
+        "content": [
+          "Raison sociale : {companyName}",
+          "Adresse : {address}",
+          "SIREN : {siren}",
+          "Email : {email}",
+          "Téléphone : {phone}"
+        ]
+      },
+      {
+        "id": "cgu",
+        "title": "Conditions générales d'utilisation",
+        "content": "En accédant à ce site, vous acceptez sans réserve les présentes conditions générales d'utilisation. Toute utilisation du site est effectuée sous la seule responsabilité de l'utilisateur."
+      },
+      {
+        "id": "contact",
+        "title": "Contact",
+        "condition": "formData.email || formData.phone",
+        "content": [
+          "Pour toute question ou réclamation, vous pouvez nous contacter à l'adresse suivante : {email} ou par téléphone au {phone}."
+        ]
+      },
+      {
+        "id": "hosting",
+        "title": "Hébergement",
+        "condition": "formData.host || formData.hostAddress",
+        "content": [
+          "Le site est hébergé par : {host}, situé à {hostAddress}.",
+          "L'hébergeur garantit la sécurité des données et respecte la réglementation en matière de protection des données personnelles."
+        ]
+      },
+      {
+        "id": "intellectualProperty",
+        "title": "Propriété intellectuelle",
+        "content": "L'ensemble des contenus présents sur ce site (textes, images, vidéos, logos) est protégé par la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Toute reproduction, modification, distribution ou exploitation de ces contenus sans autorisation écrite préalable est strictement interdite."
+      },
+      {
+        "id": "personalData",
+        "title": "Données personnelles",
+        "content": [
+          "Les informations collectées via les formulaires présents sur ce site sont destinées à {companyName}.",
+          "Conformément à la loi « Informatique et Libertés » du 6 janvier 1978 modifiée et au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données.",
+          "Pour exercer vos droits, veuillez nous contacter à l'adresse suivante : {email}.",
+          "Le site utilise des cookies afin de garantir une navigation optimale et collecter des statistiques anonymes sur l'utilisation du site."
+        ]
+      },
+      {
+        "id": "liabilities",
+        "title": "Limitations de responsabilité",
+        "content": "Le site {companyName} ne pourra être tenu responsable des dommages directs ou indirects causés au matériel de l'utilisateur lors de l'accès au site, résultant soit de l'utilisation d'un matériel non conforme, soit de l'apparition d'un bug ou d'une incompatibilité."
+      }
     ]
-}
+  }
+  
