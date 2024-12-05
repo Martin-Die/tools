@@ -10,6 +10,9 @@ const Navbar = () => {
                 <li>
                     <Link to="/Facture">Facture</Link>
                 </li>
+                <li>
+                    <Link to="/Mentions_Legales">Mentions Légales</Link>
+                </li>
             </ul>
         </nav>
     );

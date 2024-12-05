@@ -1,0 +1,34 @@
+.mentions {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 100px; 
+    width: 100%;
+}
+
+.form-container,
+.preview-container {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.container > div {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
