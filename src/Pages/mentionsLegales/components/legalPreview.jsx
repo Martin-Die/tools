@@ -7,12 +7,20 @@ const LegalPreview = ({ formData }) => {
   const copyToClipboard = async () => {
     const text = document.getElementById("legal-text")?.innerText;
     if (text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
       try {
-        await navigator.clipboard.writeText(text);
+        // await navigator.clipboard.writeText(text);
+        document.execCommand("copy");
         alert("Texte copié");
       } catch (err) {
         alert("Erreur lors de la copie");
       }
+      document.body.removeChild(textArea);
+    } else {
+      alert("Aucun texte à copier");
     }
   };
 
