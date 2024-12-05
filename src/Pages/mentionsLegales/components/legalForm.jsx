@@ -25,6 +25,7 @@ const LegalForm = ({ formData, setFormData }) => {
 						value={formData.companyName}
 						onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
 						placeholder="Votre entreprise"
+						required
 					/>
 				</div>
 				<div>
@@ -34,6 +35,7 @@ const LegalForm = ({ formData, setFormData }) => {
 						value={formData.address}
 						onChange={(e) => setFormData({ ...formData, address: e.target.value })}
 						placeholder="Adresse complète"
+						required
 					/>
 				</div>
 				<div>
@@ -43,6 +45,7 @@ const LegalForm = ({ formData, setFormData }) => {
 						value={formData.email}
 						onChange={(e) => setFormData({ ...formData, email: e.target.value })}
 						placeholder="contact@entreprise.fr"
+						required
 					/>
 				</div>
 				<div>
@@ -52,6 +55,7 @@ const LegalForm = ({ formData, setFormData }) => {
 						value={formData.phone}
 						onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
 						placeholder="01 23 45 67 89"
+						required
 					/>
 				</div>
 				<div>
@@ -61,6 +65,7 @@ const LegalForm = ({ formData, setFormData }) => {
 						value={formData.siren}
 						onChange={(e) => setFormData({ ...formData, siren: e.target.value })}
 						placeholder="123 456 789"
+						required
 					/>
 				</div>
 				<div>
@@ -70,6 +75,7 @@ const LegalForm = ({ formData, setFormData }) => {
 						value={formData.director}
 						onChange={(e) => setFormData({ ...formData, director: e.target.value })}
 						placeholder="Nom du directeur"
+						required
 					/>
 				</div>
 				<div>
@@ -79,6 +85,7 @@ const LegalForm = ({ formData, setFormData }) => {
 						value={formData.host}
 						onChange={(e) => setFormData({ ...formData, host: e.target.value })}
 						placeholder="Nom de l'hébergeur"
+						required
 					/>
 				</div>
 				<div>
@@ -88,6 +95,7 @@ const LegalForm = ({ formData, setFormData }) => {
 						value={formData.hostAddress}
 						onChange={(e) => setFormData({ ...formData, hostAddress: e.target.value })}
 						placeholder="Adresse de l'hébergeur"
+						required
 					/>
 				</div>
 				<button

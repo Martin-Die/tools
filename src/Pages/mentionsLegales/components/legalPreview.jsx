@@ -1,11 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 import { Copy } from "lucide-react";
-import legalContent from "./legalContent.json"; // Import du JSON
+import legalContent from "./legalContent.json";
 
 const LegalPreview = ({ formData }) => {
-  const [copyMessage, setCopyMessage] = useState("");
 
   const copyToClipboard = async () => {
+
+    const requiredFields = [
+      formData.companyName,
+      formData.address,
+      formData.email,
+      formData.phone,
+      formData.siren,
+      formData.director,
+      formData.host,
+      formData.hostAddress
+    ];
+
+    // Vérifier si tous les champs sont remplis
+    const missingFields = requiredFields.filter(field => !field);
+
+    if (missingFields.length > 0) {
+      alert("Veuillez remplir tous les champs avant de copier.");
+      return; // Empêche la copie si des champs sont manquants
+    }
+
     const text = document.getElementById("legal-text")?.innerText;
     if (text) {
       const textArea = document.createElement("textarea");
