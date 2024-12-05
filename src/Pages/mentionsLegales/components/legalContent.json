@@ -4,22 +4,22 @@
             "id": "presentation",
             "title": "Présentation du site",
             "condition": "formData.companyName",
-            "content": "En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site {formData.companyName} l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi."
+            "content": "En vertu de l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, il est précisé aux utilisateurs du site {companyName} l'identité des différents intervenants dans le cadre de sa réalisation et de son suivi."
         },
         {
             "id": "director",
             "title": "Directeur de publication",
             "condition": "formData.director",
-            "content": "Le directeur de publication est : {formData.director}"
+            "content": "Le directeur de publication est : {director}"
         },
         {
             "id": "legalInfo",
             "title": "Informations légales",
             "condition": "formData.companyName || formData.address || formData.siren",
             "content": [
-                "Raison sociale : {formData.companyName}",
-                "Adresse : {formData.address}",
-                "SIREN : {formData.siren}"
+                "Raison sociale : {companyName}",
+                "Adresse : {address}",
+                "SIREN : {siren}"
             ]
         },
         {
@@ -27,8 +27,8 @@
             "title": "Contact",
             "condition": "formData.email || formData.phone",
             "content": [
-                "Email : {formData.email}",
-                "Téléphone : {formData.phone}"
+                "Email : {email}",
+                "Téléphone : {phone}"
             ]
         },
         {
@@ -36,8 +36,8 @@
             "title": "Hébergement",
             "condition": "formData.host || formData.hostAddress",
             "content": [
-                "Le site est hébergé par : {formData.host}",
-                "Adresse : {formData.hostAddress}"
+                "Le site est hébergé par : {host}",
+                "Adresse : {hostAddress}"
             ]
         },
         {

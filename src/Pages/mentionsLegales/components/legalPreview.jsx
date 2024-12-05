@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Copy } from "lucide-react";
-import legalContent from './legalContent.json'
+import legalContent from "./legalContent.json"; // Import du JSON
 
 const LegalPreview = ({ formData }) => {
-  const [copyMessage] = useState("");
+  const [copyMessage, setCopyMessage] = useState("");
 
   const copyToClipboard = async () => {
     const text = document.getElementById("legal-text")?.innerText;
@@ -13,9 +13,8 @@ const LegalPreview = ({ formData }) => {
       document.body.appendChild(textArea);
       textArea.select();
       try {
-        // await navigator.clipboard.writeText(text);
         document.execCommand("copy");
-        alert("Texte copié");
+        alert("Texte copié !");
       } catch (err) {
         alert("Erreur lors de la copie");
       }
@@ -25,7 +24,7 @@ const LegalPreview = ({ formData }) => {
     }
   };
 
-  let sectionNumber = 1;
+  let sectionNumber = 1; // Compteur pour les titres dynamiques
 
   return (
     <div>
@@ -37,12 +36,9 @@ const LegalPreview = ({ formData }) => {
         </button>
       </div>
 
-      {copyMessage && <div>{copyMessage}</div>}
-
       <div id="legal-text">
         <h3>Mentions légales</h3>
         {legalContent.sections.map((section) => {
-          // Vérifie si la section doit être affichée en fonction de formData
           const showSection = section.condition
             ? new Function("formData", `return ${section.condition}`)(formData)
             : true;
