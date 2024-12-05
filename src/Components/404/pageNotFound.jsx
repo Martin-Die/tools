@@ -14,7 +14,7 @@ const PageNotFound = () => {
     <div className="page-not-found">
       <h1>404</h1>
       <img
-        src="./public/tox.png" // Remplacez par votre URL d'image ou SVG
+        src="/tox.png" // Remplacez par votre URL d'image ou SVG
         alt="Image not found"
         style={{ width: '250px', marginBottom: '30px' }}
       />
