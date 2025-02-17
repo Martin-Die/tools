@@ -38,14 +38,19 @@ const InvoiceDetails = ({ show, onClose, onSubmit }) => {
 
   const handleLogoUpload = (e) => {
     const file = e.target.files[0];
-    setFormData((prev) => ({
-      ...prev,
-      logo: file,
-    }));
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prev) => ({
+          ...prev,
+          logo: reader.result, // Convertit le fichier en URL de données
+        }));
+      };
+      reader.readAsDataURL(file); // Lit le fichier et le convertit en URL
+    }
   };
 
   const handleSubmit = () => {
-    console.log(formData)
     onSubmit(formData); // Transmet les données au parent (Facture) pour générer le PDF
     // onClose(); // Ferme le formulaire
   };

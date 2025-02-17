@@ -7,7 +7,7 @@ import autoTable from "jspdf-autotable";
  * Générateur de facture.
  * @param {Object} invoiceData - Les données nécessaires pour générer la facture.
  */
-function generateInvoice(invoiceData) {
+async function generateInvoice(invoiceData) {
 
     // Création du document PDF
     const doc = new jsPDF();
@@ -17,9 +17,20 @@ function generateInvoice(invoiceData) {
     doc.text("FACTURE", 105, 20, null, null, 'center');
 
     // Logo (optionnel)
-    const { logoUrl, logoWidth, logoHeight } = invoiceData;
-    if (logoUrl && logoWidth && logoHeight) {
-        doc.addImage(logoUrl, 'PNG', 170, 10, logoWidth, logoHeight);
+    const { logo } = invoiceData;
+    if (logo) {
+        await new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                const aspectRatio = img.width / img.height;
+                const width = 30;
+                const height = width / aspectRatio;
+                doc.addImage(logo, 'PNG', 170, 10, width, height);
+                resolve();
+            };
+            img.onerror = reject;
+            img.src = logo;
+        });
     }
 
     // Informations de l'entreprise
